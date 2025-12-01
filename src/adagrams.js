@@ -11,7 +11,6 @@ const LETTER_POOL = {
 
 
 export const drawLetters = () => {
-  // 1. Собираем массив всех букв по их количеству
   const letterPoolArray = [];
 
   for (const letter in LETTER_POOL) {
@@ -22,7 +21,6 @@ export const drawLetters = () => {
     }
   }
 
-  // 2. Выбираем 10 случайных букв без превышения лимита
   const hand = [];
 
   for (let i = 0; i < 10; i += 1) {
@@ -31,7 +29,6 @@ export const drawLetters = () => {
 
     hand.push(chosenLetter);
 
-    // удаляем эту «фишку» из пула, чтобы, например, не получить 3 Z
     letterPoolArray.splice(randomIndex, 1);
   }
 
@@ -39,7 +36,20 @@ export const drawLetters = () => {
 };
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-  // Implement this method for wave 2
+  const handCopy = [...lettersInHand];
+  const upperInput = input.toUpperCase();
+
+  for (const char of upperInput) {
+    const index = handCopy.indexOf(char);
+
+    if (index === -1) {
+      return false;
+    }
+
+    handCopy.splice(index, 1);
+  }
+
+  return true;
 };
 
 export const scoreWord = (word) => {
